@@ -1,7 +1,6 @@
 package com.rp.mpgservice.militaryservice.entity;
 
 import com.rp.mpgservice.militaryservice.dto.RequestMove;
-import com.rp.mpgservice.militaryservice.dto.TypeMove;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
-@Table(name = "army_movements")
+@Table(name = "army_move")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,12 +17,11 @@ import java.util.Objects;
 @Data
 public class ArmyMove {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     Long id;
 
-    Long idArmy;
-    TypeMove typeMove;
-    int additionalAttack;
+    Long armyId;
+
     Long moveId;
 
     @Override
@@ -31,19 +29,17 @@ public class ArmyMove {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ArmyMove armyMove = (ArmyMove) o;
-        return Objects.equals(idArmy, armyMove.idArmy);
+        return Objects.equals(armyId, armyMove.armyId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idArmy);
+        return Objects.hash(armyId);
     }
 
     public static ArmyMove makeDefaultByRequestArmy(RequestMove requestMove) {
         return ArmyMove.builder()
-                .idArmy(requestMove.getId())
-                .typeMove(requestMove.getTypeMove())
-                .additionalAttack(requestMove.getAdditionalAttack())
+                .armyId(requestMove.getId())
                 .moveId(requestMove.getMoveId())
                 .build();
     }

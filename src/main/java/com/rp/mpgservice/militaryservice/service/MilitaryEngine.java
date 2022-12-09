@@ -87,13 +87,13 @@ public class MilitaryEngine {
         ).get();
 
         List<RequestMove> winnersArmies = armies.stream()
-                .filter(army -> mapArmies.get(army.getId()).getNameState().equals(alliance.getNameState()))
+                .filter(army -> mapArmies.get(army.getId()).getStateName().equals(alliance.getNameState()))
                 .collect(Collectors.toList());
 
         winnersArmies.forEach(this::winnerPosition);
 
         List<RequestMove> loseArmies = armies.stream()
-                .filter(army -> !mapArmies.get(army.getId()).getNameState().equals(alliance.getNameState()))
+                .filter(army -> !mapArmies.get(army.getId()).getStateName().equals(alliance.getNameState()))
                 .collect(Collectors.toList());
 
         idDeleteArmies.addAll(
@@ -114,12 +114,12 @@ public class MilitaryEngine {
     private List<Alliance> groupingIntoAnAlliance(List<RequestMove> armies) {
         Map<String, Integer> mapAlliance = new HashMap<>();
         armies.forEach(army -> {
-                    String nameState = mapArmies.get(army.getId()).getNameState();
+                    String nameState = mapArmies.get(army.getId()).getStateName();
                     Integer point = mapAlliance.get(nameState);
                     if(point == null) {
-                        mapAlliance.put(nameState, mapArmies.get(army.getId()).getAttack());
+                        //mapAlliance.put(nameState, mapArmies.get(army.getId()).getAttack());
                     } else {
-                        mapAlliance.put(nameState, mapArmies.get(army.getId()).getAttack() + point);
+                        //mapAlliance.put(nameState, mapArmies.get(army.getId()).getAttack() + point);
                     }
                 });
         return mapAlliance.keySet().stream()
@@ -138,9 +138,9 @@ public class MilitaryEngine {
         Army army = Army.builder()
                 .id(move.getId())
                 .posId(posId)
-                .attack(lastArmy.getAttack())
-                .move(lastArmy.getMove())
-                .nameState(lastArmy.getNameState())
+                //.attack(lastArmy.getAttack())
+                //.move(lastArmy.getMove())
+                //.nameState(lastArmy.getStateName())
                 .build();
         newPosArmies.add(army);
     }
@@ -150,9 +150,9 @@ public class MilitaryEngine {
         Army army = Army.builder()
                 .id(move.getId())
                 .posId(lastArmy.getPosId())
-                .attack(lastArmy.getAttack())
+                /*.attack(lastArmy.getAttack())
                 .move(lastArmy.getMove())
-                .nameState(lastArmy.getNameState())
+                .nameState(lastArmy.getStateName())*/
                 .build();
         newPosArmies.add(army);
     }

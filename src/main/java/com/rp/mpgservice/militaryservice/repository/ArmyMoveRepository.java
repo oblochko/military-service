@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ArmyMoveRepository extends JpaRepository<ArmyMove, Long> {
-    Optional<ArmyMove> findByIdArmy(Long id);
+    Optional<ArmyMove> findByArmyId(Long id);
 }

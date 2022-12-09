@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArmyRepository extends JpaRepository<Army, Long> {
-    boolean existsByIdAndNameState(Long id, String nameState);
+    boolean existsByIdAndStateName(Long id, String stateName);
 }

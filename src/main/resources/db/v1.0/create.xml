@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd"
+                   changeLogId="current.xml">
+    <changeSet id="1.1_create_table_army" author="artem.sokolov">
+        <sql>
+            DROP SEQUENCE IF EXISTS army_id_seq CASCADE;
+            CREATE SEQUENCE army_id_seq;
+
+            DROP TABLE IF EXISTS army CASCADE;
+            CREATE TABLE army
+            (
+                id INTEGER DEFAULT nextval('army_id_seq'::regclass)
+                    CONSTRAINT army_pkey PRIMARY KEY,
+                pos_id INTEGER NOT NULL,
+                state_name VARCHAR(50) NOT NULL
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="1.2_create_table_unit" author="artem.sokolov">
+        <sql>
+            DROP SEQUENCE IF EXISTS unit_id_seq CASCADE;
+            CREATE SEQUENCE unit_id_seq;
+
+            DROP TABLE IF EXISTS unit CASCADE;
+            CREATE TABLE unit
+            (
+                id INTEGER DEFAULT nextval('unit_id_seq'::regclass)
+                    CONSTRAINT unit_pkey PRIMARY KEY,
+                name VARCHAR(50) NOT NULL
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="1.3_create_table_army_unit" author="artem.sokolov">
+        <sql>
+            DROP TABLE IF EXISTS army_unit;
+            CREATE TABLE army_unit
+            (
+                army_id INTEGER NOT NULL,
+                unit_id INTEGER NOT NULL,
+                CONSTRAINT fk_army_au_id FOREIGN KEY (army_id) REFERENCES army(id),
+                CONSTRAINT fk_unit_au_id FOREIGN KEY (unit_id) REFERENCES unit(id)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="1.4_create_table_army_move" author="artem.sokolov">
+        <sql>
+            DROP SEQUENCE IF EXISTS army_move_id_seq CASCADE;
+            CREATE SEQUENCE army_move_id_seq;
+
+            DROP TABLE IF EXISTS army_move CASCADE;
+            CREATE TABLE army_move
+            (
+                id INTEGER DEFAULT nextval('army_move_id_seq'::regclass)
+                    CONSTRAINT army_move_pkey PRIMARY KEY,
+                army_id INTEGER NOT NULL,
+                move_id INTEGER NOT NULL
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="1.5_create_table_action" author="artem.sokolov">
+        <sql>
+            DROP SEQUENCE IF EXISTS action_id_seq CASCADE;
+            CREATE SEQUENCE action_id_seq;
+
+            DROP TABLE IF EXISTS action CASCADE;
+            CREATE TABLE action
+            (
+                id INTEGER DEFAULT nextval('action_id_seq'::regclass)
+                    CONSTRAINT action_pkey PRIMARY KEY,
+                name VARCHAR(50) NOT NULL,
+                damage INTEGER NOT NULL,
+                type_action_name VARCHAR(50) NOT NULL DEFAULT ('Холд'),
+                unit_id INTEGER NOT NULL,
+                CONSTRAINT fk_unit_u_id FOREIGN KEY (unit_id) REFERENCES unit(id)
+            );
+        </sql>
+    </changeSet>
+    <include file="/db/v1.0/init.xml"/>
+</databaseChangeLog>

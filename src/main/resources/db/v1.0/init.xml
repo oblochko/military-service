@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd"
+                   changeLogId="current.xml">
+    <changeSet id="2.1_init_table_unit" author="artem.sokolov">
+        <sql>
+            INSERT INTO unit (name)
+            values
+                ('Ополченец'), -- 1
+                ('Пехотинец'), -- 2
+                ('Тяжёлая пехота'), -- 3
+                ('Копейщик'), -- 4
+                ('Рыцарь'), -- 5
+                ('Лёгкая кавалерия'), -- 6
+                ('Конный лучник'), -- 7
+                ('Лучник'), -- 8
+                ('Арбалетчик'), -- 9
+                ('Застрельшик'), -- 10
+                ('Алебардист') -- 11
+        </sql>
+    </changeSet>
+    <changeSet id="2.2_init_table_action" author="artem.sokolov">
+        <sql>
+            INSERT INTO action (name, damage, unit_id)
+            values
+                ('Ближний бой', 2, 1), -- Ополченец
+                ('Ближний бой', 3, 2), -- Пехотинец
+                ('Ближний бой', 3, 2), -- Пехотинец
+                ('Ближний бой', 4, 3), -- Тяжёлая пехота
+                ('Ближний бой', 5, 3), -- Тяжёлая пехота
+                ('Стена пик', 2, 4), -- Копейщик
+                ('Стена пик', 2, 4), -- Копейщик
+                ('Наскок', 5, 5), -- Рыцарь
+                ('Ближний бой', 5, 5), -- Рыцарь
+                ('Наскок', 4, 6), -- Лёгкая кавалерия
+                ('Наскок', 4, 6), -- Лёгкая кавалерия
+                ('Выстрел', 3, 7), -- Конный лучник
+                ('Наскок', 3, 7), -- Конный лучник
+                ('Выстрел', 2, 8), -- Лучник
+                ('Выстрел', 2, 8), -- Лучник
+                ('Выстрел', 5, 9), -- Арбалетчик
+                ('Бросок', 2, 10), -- Застрельшик
+                ('Ближний бой', 3, 10), -- Застрельшик
+                ('Стена пик', 2, 11), -- Алебардист
+                ('Ближний бой', 3, 11) -- Алебардист
+        </sql>
+    </changeSet>
+</databaseChangeLog>

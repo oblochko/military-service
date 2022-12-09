@@ -52,14 +52,14 @@ public class MilitaryService {
 
     @Transactional
     public void armyMove(String nameState, RequestMove requestMove) throws Exception {
-        if(!armyRepository.existsByIdAndNameState(requestMove.getId(), nameState))
+        if(!armyRepository.existsByIdAndStateName(requestMove.getId(), nameState))
             throw new Exception();
 
-        Optional<ArmyMove> armyMove = armyMoveRepository.findByIdArmy(requestMove.getId());
+        Optional<ArmyMove> armyMove = armyMoveRepository.findByArmyId(requestMove.getId());
         if(armyMove.isPresent()) {
             armyMove.get().setMoveId(requestMove.getMoveId());
-            armyMove.get().setTypeMove(requestMove.getTypeMove());
-            armyMove.get().setAdditionalAttack(requestMove.getAdditionalAttack());
+            //armyMove.get().setTypeMove(requestMove.getTypeMove());
+            //armyMove.get().setAdditionalAttack(requestMove.getAdditionalAttack());
             armyMoveRepository.save(armyMove.get());
             return;
         }

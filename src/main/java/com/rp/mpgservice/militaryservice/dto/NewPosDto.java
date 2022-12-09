@@ -20,7 +20,7 @@ public class NewPosDto {
     public static NewPosDto makeDefaultByArmy(Army army) {
         return NewPosDto.builder()
                 .idArmies(army.getId())
-                .nameState(army.getNameState())
+                .nameState(army.getStateName())
                 .idPos(army.getPosId())
                 .build();
     }

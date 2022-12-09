@@ -3,7 +3,12 @@ package com.rp.mpgservice.militaryservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name = "armies")
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Table(name = "army")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,13 +17,19 @@ import lombok.*;
 public class Army {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private Long posId;
+    private String stateName;
 
-    private int attack;
-    private int move;
-
-    private String nameState;
+    @ManyToMany (cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "army_unit",
+            joinColumns = @JoinColumn(name = "army_id"),
+            inverseJoinColumns = @JoinColumn(name = "unit_id")
+    )
+    private Set<Unit> units = new HashSet<>();
 }

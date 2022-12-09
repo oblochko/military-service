@@ -26,9 +26,9 @@ public class RequestMove {
 
     public static RequestMove makeDefaultByArmyMove(ArmyMove armyMove) {
         return RequestMove.builder()
-                .id(armyMove.getIdArmy())
-                .typeMove(armyMove.getTypeMove())
-                .additionalAttack(armyMove.getAdditionalAttack())
+                .id(armyMove.getArmyId())
+                .typeMove(TypeMove.MOVE)
+                //.additionalAttack(armyMove.getAdditionalAttack())
                 .moveId(armyMove.getMoveId())
                 .build();
     }
