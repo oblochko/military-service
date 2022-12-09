@@ -29,7 +29,7 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd"
             (
                 id INTEGER DEFAULT nextval('unit_id_seq'::regclass)
                     CONSTRAINT unit_pkey PRIMARY KEY,
-                name VARCHAR(50) NOT NULL
+                name VARCHAR(50) NOT NULL UNIQUE
             );
         </sql>
     </changeSet>

@@ -2,7 +2,11 @@ package com.rp.mpgservice.militaryservice.controller;
 
 import com.rp.mpgservice.militaryservice.dto.RequestMove;
 import com.rp.mpgservice.militaryservice.dto.NewPosDto;
+import com.rp.mpgservice.militaryservice.entity.Action;
 import com.rp.mpgservice.militaryservice.entity.Army;
+import com.rp.mpgservice.militaryservice.entity.Unit;
+import com.rp.mpgservice.militaryservice.repository.ActionRepository;
+import com.rp.mpgservice.militaryservice.repository.UnitRepository;
 import com.rp.mpgservice.militaryservice.service.MilitaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

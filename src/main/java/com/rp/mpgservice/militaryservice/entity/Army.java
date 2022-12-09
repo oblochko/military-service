@@ -32,4 +32,22 @@ public class Army {
             inverseJoinColumns = @JoinColumn(name = "unit_id")
     )
     private Set<Unit> units = new HashSet<>();
+
+    public void addUnit(Unit unit) {
+        this.units.add(unit);
+        unit.getArmies().add(this);
+    }
+    public void removeUnit(Unit unit) {
+        this.units.remove(unit);
+        unit.getArmies().remove(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Army{" +
+                "id=" + id +
+                ", posId=" + posId +
+                ", stateName='" + stateName + '\'' +
+                '}';
+    }
 }
