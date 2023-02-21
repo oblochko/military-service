@@ -1,5 +1,6 @@
 package com.rp.mpgservice.militaryservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,11 @@ public class Action {
 
     @ManyToOne
     private Unit unit;
+
+    @JsonBackReference
+    public Unit getUnit() {
+        return this.unit;
+    }
 
     @Override
     public boolean equals(Object o) {

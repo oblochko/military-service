@@ -1,5 +1,6 @@
 package com.rp.mpgservice.militaryservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +33,11 @@ public class Army {
             inverseJoinColumns = @JoinColumn(name = "unit_id")
     )
     private Set<Unit> units = new HashSet<>();
+
+    @JsonManagedReference
+    public Set<Unit> getUnits() {
+        return this.units;
+    }
 
     public void addUnit(Unit unit) {
         this.units.add(unit);

@@ -1,5 +1,7 @@
 package com.rp.mpgservice.militaryservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +27,16 @@ public class Unit {
     private List<Action> actions = new ArrayList<>();
     @ManyToMany(mappedBy = "units")
     private Set<Army> armies = new HashSet<>();
+
+    @JsonManagedReference
+    public List<Action> getActions() {
+        return this.actions;
+    }
+
+    @JsonBackReference
+    public Set<Army> getArmies() {
+        return this.armies;
+    }
 
     public void addAction(Action action) {
         actions.add(action);
