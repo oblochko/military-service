@@ -24,6 +24,8 @@ public class ArmyMove {
 
     Long moveId;
 
+    Boolean flag;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

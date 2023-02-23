@@ -7,9 +7,12 @@ import com.rp.mpgservice.militaryservice.entity.Army;
 import com.rp.mpgservice.militaryservice.entity.Unit;
 import com.rp.mpgservice.militaryservice.repository.ActionRepository;
 import com.rp.mpgservice.militaryservice.repository.UnitRepository;
+import com.rp.mpgservice.militaryservice.security.SecurityUtil;
 import com.rp.mpgservice.militaryservice.service.MilitaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,13 +46,14 @@ public class MilitaryController {
 
     @PostMapping("/completeTheMove")
     @ResponseStatus(HttpStatus.OK)
-    public List<NewPosDto> completeTheMove() {
-        return militaryService.completeTheMove();
+    public void completeTheMove() {
+        militaryService.completeTheMoveAlternative();
     }
 
-    @PostMapping("/{nameState}/armyMove")
+    @PostMapping("/armyMove")
     @ResponseStatus(HttpStatus.OK)
-    public void armyMove(@PathVariable String nameState, @RequestBody RequestMove requestMove) throws Exception {
+    public void armyMove(@RequestBody RequestMove requestMove) throws Exception {
+        String nameState = SecurityUtil.getUserAttribute("state-en");
         militaryService.armyMove(nameState, requestMove);
     }
 }

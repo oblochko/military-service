@@ -5,6 +5,8 @@ import com.rp.mpgservice.militaryservice.dto.ResponseMove;
 import com.rp.mpgservice.militaryservice.dto.NewPosDto;
 import com.rp.mpgservice.militaryservice.entity.Army;
 import com.rp.mpgservice.militaryservice.entity.ArmyMove;
+import com.rp.mpgservice.militaryservice.exception.ActionException;
+import com.rp.mpgservice.militaryservice.exception.AllowedException;
 import com.rp.mpgservice.militaryservice.repository.ArmyMoveRepository;
 import com.rp.mpgservice.militaryservice.repository.ArmyRepository;
 import jakarta.transaction.Transactional;
@@ -24,6 +26,20 @@ public class MilitaryService {
 
     @Autowired
     ArmyMoveRepository armyMoveRepository;
+
+    @Transactional
+    public void completeTheMoveAlternative() {
+        List<ArmyMove> armyMoveList = armyMoveRepository.findAllByFlag(true);
+        for (ArmyMove armyMove: armyMoveList) {
+            Optional<Army> army = armyRepository.findById(armyMove.getArmyId());
+            if(army.isPresent() && !army.get().getPosId().equals(armyMove.getMoveId())) {
+                army.get().setPosId(armyMove.getMoveId());
+                armyRepository.save(army.get());
+                armyMove.setFlag(false);
+                armyMoveRepository.save(armyMove);
+            }
+        }
+    }
 
     @Transactional
     public List<NewPosDto> completeTheMove() {
@@ -53,11 +69,14 @@ public class MilitaryService {
     @Transactional
     public void armyMove(String nameState, RequestMove requestMove) throws Exception {
         if(!armyRepository.existsByIdAndStateName(requestMove.getId(), nameState))
-            throw new Exception();
+            throw new AllowedException("Вы не можете передвинуть армию другого государства");
 
         Optional<ArmyMove> armyMove = armyMoveRepository.findByArmyId(requestMove.getId());
         if(armyMove.isPresent()) {
+            if(armyMove.get().getFlag().equals(true))
+                throw new ActionException("Это армия уже была походила в этом ходу");
             armyMove.get().setMoveId(requestMove.getMoveId());
+            armyMove.get().setFlag(true);
             //armyMove.get().setTypeMove(requestMove.getTypeMove());
             //armyMove.get().setAdditionalAttack(requestMove.getAdditionalAttack());
             armyMoveRepository.save(armyMove.get());
